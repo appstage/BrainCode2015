@@ -28,12 +28,45 @@ package
 		public var headphones:Headphones = new Headphones;
 		public var begin:Begin = new Begin;
 		
+		//alien
+		private var greenMobs = new Array();
+		private var blueMobs = new Array();
+		private var yellowMobs = new Array();
+		private var purpleMobs = new Array();
+		private var mobsToDestroy = new Array();
+		private var levelDescription = new Array();
+		private var playingGame:Boolean = false;
+		private var levelToPlay:Number = 0;
+		private var playerStartet:Boolean = false;
+		private var dieAnyway:Boolean;
+		
+		//last
+		private var mobVector:Vector.<TheMob>=new Vector.<TheMob>();
+		private var bulletVector:Vector.<TheBullet>=new Vector.<TheBullet>();
+		private var playerCircle:PlayerCircle = new PlayerCircle;
+		private var gameTitle:GameTitle = new GameTitle;
+		private var battleField:Sprite;
+		private var levelIntro:LevelIntro;
+		private var howMany:HowMany = new HowMany;
+		
+		//end
+		
+		
+		
 		public function Hexagon()
 		{
 			
 			stage.align = StageAlign.TOP_LEFT;
 			stage.scaleMode = StageScaleMode.NO_SCALE;
-			//stage.addEventListener(MouseEvent.CLICK, _startGame);
+			
+			levelDescription[0] = "Opis level 1";
+			levelDescription[1] = "Opis level 2";
+			levelDescription[2] = "Opis level 3";
+			levelDescription[3] = "Opis level 4";
+			levelDescription[4] = "Opis level 5";
+				
+			
+			
 			_startGame();
 			
 		}
