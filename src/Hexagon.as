@@ -18,7 +18,7 @@ package
 	
 	
 
-	[SWF(width="1024",height = "768",frameRate="60",backgroundColor="#CCCCCC")]
+	[SWF(width="1024",height = "768",frameRate="60",backgroundColor="#ccc51c")]
 
 	public class Hexagon extends Sprite
 	{
