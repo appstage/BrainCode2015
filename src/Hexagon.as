@@ -1,7 +1,6 @@
 package
 {
 	import com.greensock.TweenLite;
-	
 	import flash.display.MovieClip;
 	import flash.display.Sprite;
 	import flash.display.StageAlign;
@@ -29,11 +28,11 @@ package
 		public var begin:Begin = new Begin;
 		
 		//alien
-		private var greenMobs = new Array();
-		private var blueMobs = new Array();
-		private var yellowMobs = new Array();
-		private var purpleMobs = new Array();
-		private var mobsToDestroy = new Array();
+		private var greenMobs = new Array(5,10,15,20,25);
+		private var blueMobs = new Array(0,0,0,0,1);
+		private var yellowMobs = new Array(0,0,0,0,0);
+		private var purpleMobs = new Array(0,0,0,0,0);
+		private var mobsToDestroy = new Array(2,5,10,15,3);
 		private var levelDescription = new Array();
 		private var playingGame:Boolean = false;
 		private var levelToPlay:Number = 0;
@@ -94,7 +93,29 @@ package
 		public function startScreenEnd(){
 			removeChild(begin);
 			removeChild(headphones);
+			_main();
 		}
+		
+		public function _main(){
+			var bg:BackgroundImage = new BackgroundImage();
+			//addChild(bg);
+			addChild(playerCircle);
+			addEventListener(Event.ENTER_FRAME, update);
+		}
+		
+		private function update(e:Event){
+			playerCircle.x = stage.mouseX;
+			playerCircle.y = stage.mouseY;
+			
+			for (var i:Number=0; i<mobVector.length; i++){
+				mobVector[i].theSprite.x+=mobVector[i].xSpeed;
+				mobVector[i].theSprite.y+=mobVector[i].ySpeed;
+				
+				
+			}
+			
+		}
+		
 		
 	}
 }
