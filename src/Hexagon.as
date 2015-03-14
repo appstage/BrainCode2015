@@ -30,13 +30,15 @@ package
 		//public var begin:Begin = new Begin;
 		public var begin:pla = new pla;
 		public var boo:Boolean= new Boolean(false);
+		//public var cyfra:numer = new numer;
+		//private var wynik:okno = new okno
 		
 		//alien
-		private var greenMobs = new Array(15,3,15,20,25);
-		private var blueMobs = new Array(0,5,0,0,1);
-		private var yellowMobs = new Array(0,0,0,0,0);
-		private var purpleMobs = new Array(0,0,0,0,0);
-		private var mobsToDestroy = new Array(2,1,10,15,3);
+		private var greenMobs = new Array(25,20,15,10,5,3,2);
+		private var blueMobs = new Array(0,0,0,0,0,0,0);
+		private var yellowMobs = new Array(0,0,0,0,0,0,0);
+		private var purpleMobs = new Array(0,0,0,0,0,0,0);
+		private var mobsToDestroy = new Array(14,12,10,8,6,4,2);
 		private var levelDescription = new Array();
 		private var mobsDestroyed:Number;
 		private var playingGame:Boolean = false;
@@ -54,7 +56,9 @@ package
 		private var gameTitle:GameTitle = new GameTitle;
 		private var battleField:Sprite;
 		private var levelIntro:LevelIntro;
-		private var howMany:HowMany = new HowMany;
+		//private var howMany:HowMany = new HowMany;
+		private var howMany:okno = new okno;
+
 		private var _maska:maska = new maska;
 		//private var Tlo:uiui = new uiui;
 		
@@ -114,6 +118,11 @@ package
 		public function _main():void{
 			var bg:BackgroundImage = new BackgroundImage();
 			addChild(tlo_tlo);
+			//addChild(cyfra);
+			//cyfra.alpha = 0;
+			//cyfra.x = 360;
+			//cyfra.y = 50;
+			
 			addChild(_flash);
 			//addChild(Tlo);
 			//_flash.jojo22();
@@ -127,6 +136,7 @@ package
 			addChild(playerCircle);
 			addChild(fing);
 			fing.alpha = 0;
+			
 			//fing.alpha = 0;
 			playerCircle.alpha = 0;
 			addEventListener(Event.ENTER_FRAME, update);
@@ -142,6 +152,9 @@ package
 			//if(boo == true){
 			fing.alpha = 1;
 			fing.zo();
+			
+			//var gameMusic3:muza1 = new muza1;
+			//var soundChannel3:SoundChannel=gameMusic3.play(0,1);
 			//boo == false;
 			//}
 			//else if (boo == false){
@@ -226,7 +239,9 @@ package
 							j--;
 						}
 						mobsDestroyed++;
-						howMany.howManyText.text="Exploded: "+mobsDestroyed+"/"+mobsToDestroy[levelToPlay];
+						//howMany.howManyText.text= mobsDestroyed+"/"+mobsToDestroy[levelToPlay];
+						howMany.cc.text=mobsDestroyed+"/"+mobsToDestroy[levelToPlay];
+
 					}
 				}
 				if (bulletVector[i].theSprite.y>768||bulletVector[i].theSprite.y<0||bulletVector[i].theSprite.x>1024||bulletVector[i].theSprite.x<0) {
@@ -260,6 +275,10 @@ package
 			//addChild(bg);
 			//battleField.removeChild(levelIntro);
 			//playerStarted=true;
+			//addChild(cyfra);
+			//cyfra.alpha = .1;
+			var gameMusic2:muza1 = new muza1;
+			var soundChannel2:SoundChannel=gameMusic2.play(0,1);
 			
 			//TweenLite.to(levelIntro, 0, {scaleX:0, scaleY:0, delay:2});
 			fing.jojo();
@@ -324,8 +343,11 @@ package
 				var numberOfMobs:Number=greenMobs[levelToPlay]+blueMobs[levelToPlay]+yellowMobs[levelToPlay]+purpleMobs[levelToPlay];
 				mobsDestroyed=0;
 				var collisionArray:Array= new Array();
-				howMany=new HowMany();
-				howMany.howManyText.text="Exploded: "+mobsDestroyed+"/"+mobsToDestroy[levelToPlay];
+				howMany=new okno();
+				//howMany.howManyText.text=mobsDestroyed+"/"+mobsToDestroy[levelToPlay];
+				howMany.cc.text=mobsDestroyed+"/"+mobsToDestroy[levelToPlay];
+
+				//cyfra.tete.text = "5";
 				battleField.addChild(howMany);
 				levelIntro=new LevelIntro();
 				levelIntro.x=480;//250
