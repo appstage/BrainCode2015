@@ -32,11 +32,11 @@ package
 		public var boo:Boolean= new Boolean(false);
 		
 		//alien
-		private var greenMobs = new Array(15,10,15,20,25);
-		private var blueMobs = new Array(0,0,0,0,1);
+		private var greenMobs = new Array(15,3,15,20,25);
+		private var blueMobs = new Array(0,5,0,0,1);
 		private var yellowMobs = new Array(0,0,0,0,0);
 		private var purpleMobs = new Array(0,0,0,0,0);
-		private var mobsToDestroy = new Array(2,5,10,15,3);
+		private var mobsToDestroy = new Array(2,1,10,15,3);
 		private var levelDescription = new Array();
 		private var mobsDestroyed:Number;
 		private var playingGame:Boolean = false;
@@ -55,6 +55,8 @@ package
 		private var battleField:Sprite;
 		private var levelIntro:LevelIntro;
 		private var howMany:HowMany = new HowMany;
+		private var _maska:maska = new maska;
+		//private var Tlo:uiui = new uiui;
 		
 		//end
 		
@@ -88,7 +90,7 @@ package
 			addChild(begin);
 			begin.x = 440;
 			begin.y = 800;
-			TweenLite.to(begin, 1, {x:440, y:580, delay:3});
+			TweenLite.to(begin, .5, {x:440, y:580, delay:3});
 			begin.addEventListener(MouseEvent.CLICK, gogo);
 			//var gg:finger = new finger();
 			//addChild(gg);
@@ -113,12 +115,15 @@ package
 			var bg:BackgroundImage = new BackgroundImage();
 			addChild(tlo_tlo);
 			addChild(_flash);
+			//addChild(Tlo);
 			//_flash.jojo22();
 			_flash.alpha = 0;
 			
 			
 			//addChild(bg);
 			addChild(gameTitle);
+			gameTitle.x = 530;
+			gameTitle.y = 280;
 			addChild(playerCircle);
 			addChild(fing);
 			fing.alpha = 0;
@@ -127,6 +132,10 @@ package
 			addEventListener(Event.ENTER_FRAME, update);
 			stage.addEventListener(MouseEvent.MOUSE_UP, gameGame);
 			stage.addEventListener(MouseEvent.MOUSE_DOWN, pp);
+			//addChild(_maska);
+			//_maska.x = 1040;
+			//_maska.y = 780
+			//TweenLite.to(_maska, .5, {scaleX:1300, scaleY:1300});
 		}
 		
 		private function pp(event:MouseEvent):void{
@@ -246,6 +255,13 @@ package
 		
 		private function gameGame(event:MouseEvent):void{
 			//removeChild(fing);
+			//removeChild(_maska);
+			//var bg:BackgroundImage = new BackgroundImage();
+			//addChild(bg);
+			//battleField.removeChild(levelIntro);
+			//playerStarted=true;
+			
+			//TweenLite.to(levelIntro, 0, {scaleX:0, scaleY:0, delay:2});
 			fing.jojo();
 			//_flash.zo22();
 			//_flash.alpha = .6;
@@ -255,6 +271,7 @@ package
 				playingGame = true;
 				removeChild(gameTitle);
 				removeChild(playerCircle);
+				//playerStarted=true;
 				//removeChild(fing);
 				//fing.alpha = 0;
 				//boo = true;
@@ -279,6 +296,7 @@ package
 				if (! playerStarted) {
 					battleField.removeChild(levelIntro);
 					// game jeden start
+					//addChild(Tlo);
 					playerStarted=true;
 			}
 			
@@ -288,8 +306,8 @@ package
 		
 		private function playLevel():void{
 			if (levelToPlay==20) {
-				var congratzScreen:CongratzScreen=new CongratzScreen();
-				addChild(congratzScreen);
+				//var congratzScreen:CongratzScreen=new CongratzScreen();
+				//addChild(congratzScreen);
 			}
 			else {
 				dieAnyway=false;
