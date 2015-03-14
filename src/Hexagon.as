@@ -26,6 +26,7 @@ package
 		//public var bgStart
 		//public var headphones
 		public var headphones:Headphones = new Headphones;
+		public var tlo_tlo:tlo = new tlo;
 		//public var begin:Begin = new Begin;
 		public var begin:pla = new pla;
 		public var boo:Boolean= new Boolean(false);
@@ -49,6 +50,7 @@ package
 		private var bulletVector:Vector.<TheBullet>=new Vector.<TheBullet>();
 		private var playerCircle:PlayerCircle = new PlayerCircle;
 		private var fing:finger = new finger;
+		private var _flash:dwa2 = new dwa2;
 		private var gameTitle:GameTitle = new GameTitle;
 		private var battleField:Sprite;
 		private var levelIntro:LevelIntro;
@@ -109,6 +111,12 @@ package
 		
 		public function _main():void{
 			var bg:BackgroundImage = new BackgroundImage();
+			addChild(tlo_tlo);
+			addChild(_flash);
+			//_flash.jojo22();
+			_flash.alpha = 0;
+			
+			
 			//addChild(bg);
 			addChild(gameTitle);
 			addChild(playerCircle);
@@ -140,6 +148,9 @@ package
 			
 			fing.x = stage.mouseX;
 			fing.y = stage.mouseY;
+			
+			_flash.x = stage.mouseX;
+			_flash.y = stage.mouseY;
 			
 			
 			for (var i:Number=0; i<mobVector.length; i++){
@@ -236,6 +247,9 @@ package
 		private function gameGame(event:MouseEvent):void{
 			//removeChild(fing);
 			fing.jojo();
+			//_flash.zo22();
+			//_flash.alpha = .6;
+			//_flash.zo22();
 			fing.alpha = 0;
 			if (! playingGame) {
 				playingGame = true;
@@ -250,6 +264,8 @@ package
 			else {
 				if (playerStarted && !playerExploded){
 					playerExploded = true;
+					_flash.alpha = .6;
+					_flash.zo22();
 					for (var i:Number=1; i<=4; i++){
 						var theBullet:TheBullet=new TheBullet(new PlayerBullet(),playerCircle,Math.PI*i/2);
 						bulletVector.push(theBullet);
@@ -294,11 +310,15 @@ package
 				howMany.howManyText.text="Exploded: "+mobsDestroyed+"/"+mobsToDestroy[levelToPlay];
 				battleField.addChild(howMany);
 				levelIntro=new LevelIntro();
-				levelIntro.x=350;//250
-				levelIntro.y=350;//250
+				levelIntro.x=480;//250
+				levelIntro.y=400;//250
 				levelIntro.levelName.text="Level "+(levelToPlay+1);
+				
 				levelIntro.levelNotes.text=levelDescription[levelToPlay];
+				TweenLite.to(levelIntro, 0, {scaleX:0, scaleY:0});
 				battleField.addChild(levelIntro);
+				
+				TweenLite.to(levelIntro, .7, {scaleX:1, scaleY:1});
 				playerCircle=new PlayerCircle();
 				//fing.alpha = 0;
 				
