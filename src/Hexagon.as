@@ -18,7 +18,7 @@ package
 	
 	
 
-	[SWF(width="1024",height = "768",frameRate="60",backgroundColor="#ccc51c")]
+	[SWF(width="1024",height = "768",frameRate="40",backgroundColor="#DE0000")]
 
 	public class Hexagon extends Sprite
 	{
@@ -26,10 +26,12 @@ package
 		//public var bgStart
 		//public var headphones
 		public var headphones:Headphones = new Headphones;
-		public var begin:Begin = new Begin;
+		//public var begin:Begin = new Begin;
+		public var begin:pla = new pla;
+		public var boo:Boolean= new Boolean(false);
 		
 		//alien
-		private var greenMobs = new Array(5,10,15,20,25);
+		private var greenMobs = new Array(15,10,15,20,25);
 		private var blueMobs = new Array(0,0,0,0,1);
 		private var yellowMobs = new Array(0,0,0,0,0);
 		private var purpleMobs = new Array(0,0,0,0,0);
@@ -46,6 +48,7 @@ package
 		private var mobVector:Vector.<TheMob>=new Vector.<TheMob>();
 		private var bulletVector:Vector.<TheBullet>=new Vector.<TheBullet>();
 		private var playerCircle:PlayerCircle = new PlayerCircle;
+		private var fing:finger = new finger;
 		private var gameTitle:GameTitle = new GameTitle;
 		private var battleField:Sprite;
 		private var levelIntro:LevelIntro;
@@ -66,6 +69,7 @@ package
 			levelDescription[2] = "Opis level 3";
 			levelDescription[3] = "Opis level 4";
 			levelDescription[4] = "Opis level 5";
+			
 				
 			
 			
@@ -80,17 +84,21 @@ package
 			headphones.y = -480;
 			TweenLite.to(headphones, 1.5, {x:400, y:80, delay:.8});
 			addChild(begin);
-			begin.x = 200;
+			begin.x = 440;
 			begin.y = 800;
-			TweenLite.to(begin, 1, {x:200, y:580, delay:3});
+			TweenLite.to(begin, 1, {x:440, y:580, delay:3});
 			begin.addEventListener(MouseEvent.CLICK, gogo);
+			//var gg:finger = new finger();
+			//addChild(gg);
+			var gameMusic:GameMusic2 = new GameMusic2();
+			var soundChannel:SoundChannel=gameMusic.play(0,10000);
 			
 		}
 		
 		public function gogo(Event:MouseEvent):void{
 			begin.removeEventListener(MouseEvent.CLICK, gogo);
 			TweenLite.to(headphones, 1, {x:400, y:-480});
-			TweenLite.to(begin, 1, {x:200, y:800, onComplete:startScreenEnd});
+			TweenLite.to(begin, 1, {x:440, y:800, onComplete:startScreenEnd});
 		}
 		
 		public function startScreenEnd():void{
@@ -104,13 +112,35 @@ package
 			//addChild(bg);
 			addChild(gameTitle);
 			addChild(playerCircle);
+			addChild(fing);
+			fing.alpha = 0;
+			//fing.alpha = 0;
+			playerCircle.alpha = 0;
 			addEventListener(Event.ENTER_FRAME, update);
-			stage.addEventListener(MouseEvent.CLICK, gameGame);
+			stage.addEventListener(MouseEvent.MOUSE_UP, gameGame);
+			stage.addEventListener(MouseEvent.MOUSE_DOWN, pp);
+		}
+		
+		private function pp(event:MouseEvent):void{
+			//if(boo == true){
+			fing.alpha = 1;
+			fing.zo();
+			//boo == false;
+			//}
+			//else if (boo == false){
+			//	removeChild(fing);
+			//	boo = true;
+			//}
+			
 		}
 		
 		private function update(e:Event):void{
 			playerCircle.x = stage.mouseX;
 			playerCircle.y = stage.mouseY;
+			
+			fing.x = stage.mouseX;
+			fing.y = stage.mouseY;
+			
 			
 			for (var i:Number=0; i<mobVector.length; i++){
 				mobVector[i].theSprite.x+=mobVector[i].xSpeed;
@@ -188,6 +218,7 @@ package
 						}
 						//animacja
 						playLevel();
+						//addChild(fing);
 					}	
 				}
 			}
@@ -203,11 +234,18 @@ package
 		
 		
 		private function gameGame(event:MouseEvent):void{
+			//removeChild(fing);
+			fing.jojo();
+			fing.alpha = 0;
 			if (! playingGame) {
 				playingGame = true;
 				removeChild(gameTitle);
 				removeChild(playerCircle);
+				//removeChild(fing);
+				//fing.alpha = 0;
+				//boo = true;
 				playLevel();
+				//boo = true;
 			}
 			else {
 				if (playerStarted && !playerExploded){
@@ -218,7 +256,8 @@ package
 						battleField.addChild(theBullet.theSprite);
 						
 					}
-					playerCircle.alpha=0.25;
+					playerCircle.alpha=0;
+					//fing.alpha = 0;
 					
 				}
 				if (! playerStarted) {
@@ -232,6 +271,61 @@ package
 		
 		
 		private function playLevel():void{
+			if (levelToPlay==20) {
+				var congratzScreen:CongratzScreen=new CongratzScreen();
+				addChild(congratzScreen);
+			}
+			else {
+				dieAnyway=false;
+				mobVector=new Vector.<TheMob>();
+				bulletVector=new Vector.<TheBullet>();
+				playerStarted=false;
+				playerExploded=false;
+				if (battleField!=null) {
+					removeChild(battleField);
+				}
+				battleField=new Sprite();
+				addChild(battleField);
+				var loseAnyway:Boolean=false;
+				var numberOfMobs:Number=greenMobs[levelToPlay]+blueMobs[levelToPlay]+yellowMobs[levelToPlay]+purpleMobs[levelToPlay];
+				mobsDestroyed=0;
+				var collisionArray:Array= new Array();
+				howMany=new HowMany();
+				howMany.howManyText.text="Exploded: "+mobsDestroyed+"/"+mobsToDestroy[levelToPlay];
+				battleField.addChild(howMany);
+				levelIntro=new LevelIntro();
+				levelIntro.x=350;//250
+				levelIntro.y=350;//250
+				levelIntro.levelName.text="Level "+(levelToPlay+1);
+				levelIntro.levelNotes.text=levelDescription[levelToPlay];
+				battleField.addChild(levelIntro);
+				playerCircle=new PlayerCircle();
+				//fing.alpha = 0;
+				
+				playerCircle.alpha = 0;
+				battleField.addChild(playerCircle);
+				for (var i:Number=0; i<greenMobs[levelToPlay]; i++) {
+					var theMob:TheMob=new TheMob(new GreenMob());
+					mobVector.push(theMob);
+					battleField.addChild(theMob.theSprite);
+				}
+				for (i=0; i<blueMobs[levelToPlay]; i++) {
+					theMob=new TheMob(new BlueMob());
+					mobVector.push(theMob);
+					battleField.addChild(theMob.theSprite);
+				}
+				for (i=0; i<yellowMobs[levelToPlay]; i++) {
+					theMob=new TheMob(new YellowMob());
+					mobVector.push(theMob);
+					battleField.addChild(theMob.theSprite);
+				}
+				for (i=0; i<purpleMobs[levelToPlay]; i++) {
+					theMob=new TheMob(new PurpleMob());
+					mobVector.push(theMob);
+					battleField.addChild(theMob.theSprite);
+				}
+			}
+		
 			
 		}
 	}
